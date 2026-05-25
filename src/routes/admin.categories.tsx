@@ -31,17 +31,17 @@ function AdminCategories() {
     setEditId(null); void load();
   };
   const del = async (id: string) => {
-    if (!confirm("Delete this category?")) return;
+    if (!confirm("Bu kategori silinsin mi?")) return;
     const { error } = await supabase.from("categories").delete().eq("id", id);
     if (error) toast.error(error.message); else void load();
   };
 
   return (
     <div className="space-y-4 max-w-2xl">
-      <h1 className="font-serif text-3xl font-semibold">Categories</h1>
+      <h1 className="font-serif text-3xl font-semibold">Kategoriler</h1>
       <div className="flex gap-2">
-        <Input value={newName} onChange={(e)=>setNewName(e.target.value)} placeholder="New category name" />
-        <Button onClick={add} className="bg-primary hover:bg-primary/90"><Plus size={14} className="mr-1" /> Add</Button>
+        <Input value={newName} onChange={(e)=>setNewName(e.target.value)} placeholder="Yeni kategori adı" />
+        <Button onClick={add} className="bg-primary hover:bg-primary/90"><Plus size={14} className="mr-1" /> Ekle</Button>
       </div>
       <div className="rounded-xl border border-border bg-card divide-y divide-border">
         {list.map(c => (
@@ -64,7 +64,7 @@ function AdminCategories() {
             </div>
           </div>
         ))}
-        {list.length === 0 && <div className="p-6 text-center text-muted-foreground">No categories</div>}
+        {list.length === 0 && <div className="p-6 text-center text-muted-foreground">Kategori yok</div>}
       </div>
     </div>
   );

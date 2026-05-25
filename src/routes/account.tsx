@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import { OrdersPage } from "./orders";
 
 export const Route = createFileRoute("/account")({
-  head: () => ({ meta: [{ title: "My Account — Brew & Co." }] }),
+  head: () => ({ meta: [{ title: "Hesabım — Brew & Co." }] }),
   component: () => <Protected><AccountPage /></Protected>,
 });
 
@@ -42,7 +42,7 @@ function AccountPage() {
     }
     setSaving(false);
     if (error) { toast.error(error.message); return; }
-    toast.success("Profile updated");
+    toast.success("Profil güncellendi");
     setPassword("");
     void refresh();
   };
@@ -55,27 +55,27 @@ function AccountPage() {
         </div>
         <div className="mt-3 font-serif text-xl">{profile?.first_name} {profile?.last_name}</div>
         <div className="text-sm text-muted-foreground truncate">{profile?.email ?? user?.email}</div>
-        {profile && <div className="text-xs text-muted-foreground mt-2">Member since {dateShort(profile.created_at)}</div>}
+        {profile && <div className="text-xs text-muted-foreground mt-2">Üyelik: {dateShort(profile.created_at)}</div>}
       </aside>
 
       <div>
         <Tabs defaultValue="profile">
           <TabsList>
-            <TabsTrigger value="profile">Profile info</TabsTrigger>
-            <TabsTrigger value="orders">My orders</TabsTrigger>
+            <TabsTrigger value="profile">Profil bilgileri</TabsTrigger>
+            <TabsTrigger value="orders">Siparişlerim</TabsTrigger>
           </TabsList>
           <TabsContent value="profile" className="mt-4">
             <form onSubmit={saveProfile} className="rounded-2xl border border-border bg-card p-6 space-y-4">
               <div className="grid grid-cols-2 gap-3">
-                <div><Label htmlFor="f">First name</Label><Input id="f" value={firstName} onChange={(e)=>setFirstName(e.target.value)} /></div>
-                <div><Label htmlFor="l">Last name</Label><Input id="l" value={lastName} onChange={(e)=>setLastName(e.target.value)} /></div>
+                <div><Label htmlFor="f">Ad</Label><Input id="f" value={firstName} onChange={(e)=>setFirstName(e.target.value)} /></div>
+                <div><Label htmlFor="l">Soyad</Label><Input id="l" value={lastName} onChange={(e)=>setLastName(e.target.value)} /></div>
               </div>
-              <div><Label htmlFor="e">Email</Label><Input id="e" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} /></div>
+              <div><Label htmlFor="e">E-posta</Label><Input id="e" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} /></div>
               <div>
-                <Label htmlFor="p">New password</Label>
-                <Input id="p" type="password" placeholder="Leave blank to keep current" value={password} onChange={(e)=>setPassword(e.target.value)} />
+                <Label htmlFor="p">Yeni şifre</Label>
+                <Input id="p" type="password" placeholder="Değiştirmemek için boş bırakın" value={password} onChange={(e)=>setPassword(e.target.value)} />
               </div>
-              <Button type="submit" disabled={saving} className="bg-primary hover:bg-primary/90">{saving ? "Saving…" : "Save changes"}</Button>
+              <Button type="submit" disabled={saving} className="bg-primary hover:bg-primary/90">{saving ? "Kaydediliyor…" : "Değişiklikleri kaydet"}</Button>
             </form>
           </TabsContent>
           <TabsContent value="orders" className="mt-4">

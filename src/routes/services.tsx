@@ -8,8 +8,8 @@ import { money } from "@/lib/format";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Brew & Co." },
-      { name: "description", content: "Cuppings, workshops, catering, wholesale, subscriptions, and equipment consulting." },
+      { title: "Hizmetler — Brew & Co." },
+      { name: "description", content: "Tadım etkinlikleri, atölyeler, ikram, toptan satış, abonelikler ve ekipman danışmanlığı." },
     ],
   }),
   component: ServicesPage,
@@ -28,8 +28,8 @@ function ServicesPage() {
     <>
       <section className="bg-secondary/40 border-b border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
-          <h1 className="font-serif text-5xl font-semibold">Services</h1>
-          <p className="text-muted-foreground mt-2 max-w-xl">Beyond the cup — workshops, catering, and ways to bring great coffee to your space.</p>
+          <h1 className="font-serif text-5xl font-semibold">Hizmetler</h1>
+          <p className="text-muted-foreground mt-2 max-w-xl">Fincanın ötesinde — atölyeler, ikram hizmetleri ve harika kahveyi mekânınıza taşımanın yolları.</p>
         </div>
       </section>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12">

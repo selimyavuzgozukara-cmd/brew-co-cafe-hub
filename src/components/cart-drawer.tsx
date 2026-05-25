@@ -33,11 +33,11 @@ export function CartDrawer() {
         }))
       );
       if (itemsErr) throw itemsErr;
-      toast.success("Order placed! We're brewing it now.");
+      toast.success("Siparişiniz alındı! Hemen demliyoruz.");
       clear();
       setOpen(false);
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Could not place order";
+      const msg = e instanceof Error ? e.message : "Sipariş oluşturulamadı";
       toast.error(msg);
     } finally {
       setPlacing(false);
@@ -48,7 +48,7 @@ export function CartDrawer() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetContent className="w-full sm:max-w-md flex flex-col">
         <SheetHeader>
-          <SheetTitle className="font-serif text-2xl">Your cart</SheetTitle>
+          <SheetTitle className="font-serif text-2xl">Sepetiniz</SheetTitle>
         </SheetHeader>
 
         {items.length === 0 ? (
@@ -57,10 +57,10 @@ export function CartDrawer() {
               <div className="mx-auto h-14 w-14 rounded-full bg-muted grid place-items-center mb-4">
                 <ShoppingBag className="text-muted-foreground" />
               </div>
-              <p className="font-medium">Your cart is empty</p>
-              <p className="text-sm text-muted-foreground mt-1">Add something delicious from our menu.</p>
+              <p className="font-medium">Sepetiniz boş</p>
+              <p className="text-sm text-muted-foreground mt-1">Menümüzden lezzetli bir şeyler ekleyin.</p>
               <Button asChild className="mt-4" onClick={() => setOpen(false)}>
-                <Link to="/products">Browse menu</Link>
+                <Link to="/products">Menüye göz at</Link>
               </Button>
             </div>
           </div>
@@ -71,15 +71,15 @@ export function CartDrawer() {
                 <div key={i.id} className="flex gap-3 p-3 rounded-lg border border-border bg-card">
                   <div className="flex-1 min-w-0">
                     <div className="font-medium truncate">{i.name}</div>
-                    <div className="text-sm text-muted-foreground">{money(i.price)} each</div>
+                    <div className="text-sm text-muted-foreground">{money(i.price)} / adet</div>
                     <div className="mt-2 inline-flex items-center rounded-md border border-border">
-                      <button className="px-2 py-1 hover:bg-muted" onClick={() => update(i.id, i.quantity - 1)} aria-label="Decrease"><Minus size={14} /></button>
+                      <button className="px-2 py-1 hover:bg-muted" onClick={() => update(i.id, i.quantity - 1)} aria-label="Azalt"><Minus size={14} /></button>
                       <span className="px-3 text-sm tabular-nums">{i.quantity}</span>
-                      <button className="px-2 py-1 hover:bg-muted disabled:opacity-50" onClick={() => update(i.id, i.quantity + 1)} disabled={i.quantity >= i.stock} aria-label="Increase"><Plus size={14} /></button>
+                      <button className="px-2 py-1 hover:bg-muted disabled:opacity-50" onClick={() => update(i.id, i.quantity + 1)} disabled={i.quantity >= i.stock} aria-label="Arttır"><Plus size={14} /></button>
                     </div>
                   </div>
                   <div className="text-right flex flex-col justify-between items-end">
-                    <button onClick={() => remove(i.id)} className="text-muted-foreground hover:text-destructive" aria-label="Remove">
+                    <button onClick={() => remove(i.id)} className="text-muted-foreground hover:text-destructive" aria-label="Kaldır">
                       <Trash2 size={16} />
                     </button>
                     <div className="font-medium tabular-nums">{money(i.price * i.quantity)}</div>
@@ -89,17 +89,17 @@ export function CartDrawer() {
             </div>
 
             <div className="border-t border-border pt-4 space-y-2">
-              <div className="flex justify-between text-sm"><span className="text-muted-foreground">Subtotal</span><span className="tabular-nums">{money(subtotal)}</span></div>
-              <div className="flex justify-between text-sm"><span className="text-muted-foreground">Tax (18%)</span><span className="tabular-nums">{money(tax)}</span></div>
-              <div className="flex justify-between text-base font-semibold pt-2 border-t border-border"><span>Total</span><span className="tabular-nums">{money(total)}</span></div>
+              <div className="flex justify-between text-sm"><span className="text-muted-foreground">Ara toplam</span><span className="tabular-nums">{money(subtotal)}</span></div>
+              <div className="flex justify-between text-sm"><span className="text-muted-foreground">KDV (%18)</span><span className="tabular-nums">{money(tax)}</span></div>
+              <div className="flex justify-between text-base font-semibold pt-2 border-t border-border"><span>Toplam</span><span className="tabular-nums">{money(total)}</span></div>
 
               {user ? (
                 <Button onClick={placeOrder} disabled={placing} className="w-full mt-3 bg-primary hover:bg-primary/90">
-                  {placing ? "Placing order…" : "Place order"}
+                  {placing ? "Sipariş veriliyor…" : "Siparişi tamamla"}
                 </Button>
               ) : (
                 <div className="mt-3 p-3 rounded-md bg-muted text-sm text-muted-foreground text-center">
-                  Please <Link to="/login" onClick={() => setOpen(false)} className="font-medium text-foreground underline">log in</Link> to place an order.
+                  Sipariş vermek için lütfen <Link to="/login" onClick={() => setOpen(false)} className="font-medium text-foreground underline">giriş yapın</Link>.
                 </div>
               )}
             </div>

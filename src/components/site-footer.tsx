@@ -13,41 +13,41 @@ export function SiteFooter() {
             <span className="font-serif text-xl font-semibold">Brew &amp; Co.</span>
           </Link>
           <p className="text-sm text-muted-foreground max-w-xs">
-            Small-batch roasts, slow mornings, and the kind of cup you remember.
+            Küçük partiler hâlinde kavrulan kahveler, sakin sabahlar ve unutamayacağınız bir fincan.
           </p>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold mb-3">Shop</h4>
+          <h4 className="text-sm font-semibold mb-3">Mağaza</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/products" className="hover:text-foreground">Menu</Link></li>
-            <li><Link to="/services" className="hover:text-foreground">Services</Link></li>
-            <li><Link to="/orders" className="hover:text-foreground">My Orders</Link></li>
+            <li><Link to="/products" className="hover:text-foreground">Menü</Link></li>
+            <li><Link to="/services" className="hover:text-foreground">Hizmetler</Link></li>
+            <li><Link to="/orders" className="hover:text-foreground">Siparişlerim</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold mb-3">Account</h4>
+          <h4 className="text-sm font-semibold mb-3">Hesap</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/login" className="hover:text-foreground">Sign in</Link></li>
-            <li><Link to="/signup" className="hover:text-foreground">Create account</Link></li>
-            <li><Link to="/account" className="hover:text-foreground">My profile</Link></li>
+            <li><Link to="/login" className="hover:text-foreground">Giriş Yap</Link></li>
+            <li><Link to="/signup" className="hover:text-foreground">Hesap Oluştur</Link></li>
+            <li><Link to="/account" className="hover:text-foreground">Profilim</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold mb-3">Visit</h4>
+          <h4 className="text-sm font-semibold mb-3">Ziyaret</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>221 Roastery Lane</li>
-            <li>Open daily · 7am – 7pm</li>
-            <li>hello@brewco.cafe</li>
+            <li>Kavurma Sokak No: 221</li>
+            <li>Her gün açık · 07.00 – 19.00</li>
+            <li>merhaba@brewco.cafe</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 text-xs text-muted-foreground flex justify-between">
           <span>© {new Date().getFullYear()} Brew &amp; Co.</span>
-          <span>Brewed with care.</span>
+          <span>Özenle demlendi.</span>
         </div>
       </div>
     </footer>

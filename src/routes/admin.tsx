@@ -8,18 +8,18 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Admin — Brew & Co." }] }),
+  head: () => ({ meta: [{ title: "Yönetim — Brew & Co." }] }),
   component: () => <Protected admin><AdminLayout /></Protected>,
 });
 
 const items = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/admin/products", label: "Products", icon: Package },
-  { to: "/admin/categories", label: "Categories", icon: FolderTree },
-  { to: "/admin/orders", label: "Orders", icon: ShoppingCart },
-  { to: "/admin/reviews", label: "Reviews", icon: Star },
-  { to: "/admin/services", label: "Services", icon: Wrench },
-  { to: "/admin/users", label: "Users", icon: Users },
+  { to: "/admin", label: "Panel", icon: LayoutDashboard, exact: true },
+  { to: "/admin/products", label: "Ürünler", icon: Package },
+  { to: "/admin/categories", label: "Kategoriler", icon: FolderTree },
+  { to: "/admin/orders", label: "Siparişler", icon: ShoppingCart },
+  { to: "/admin/reviews", label: "Yorumlar", icon: Star },
+  { to: "/admin/services", label: "Hizmetler", icon: Wrench },
+  { to: "/admin/users", label: "Kullanıcılar", icon: Users },
 ];
 
 function AdminLayout() {
@@ -37,7 +37,7 @@ function AdminLayout() {
       <aside className="w-60 shrink-0 bg-sidebar text-sidebar-foreground flex flex-col">
         <div className="h-16 px-5 flex items-center gap-2 border-b border-sidebar-border">
           <span className="grid place-items-center h-8 w-8 rounded-full bg-sidebar-primary text-sidebar-primary-foreground"><Coffee size={16} /></span>
-          <span className="font-serif text-lg font-semibold">Brew Admin</span>
+          <span className="font-serif text-lg font-semibold">Brew Yönetim</span>
         </div>
         <nav className="flex-1 p-3 space-y-1">
           {items.map((it) => {
@@ -51,7 +51,7 @@ function AdminLayout() {
                 )}>
                 <Icon size={16} />
                 <span className="flex-1">{it.label}</span>
-                {it.label === "Reviews" && pendingReviews > 0 && (
+                {it.label === "Yorumlar" && pendingReviews > 0 && (
                   <span className="px-1.5 rounded-full bg-accent text-accent-foreground text-[10px] font-bold">{pendingReviews}</span>
                 )}
               </Link>
@@ -59,14 +59,14 @@ function AdminLayout() {
           })}
         </nav>
         <div className="p-3 border-t border-sidebar-border">
-          <Link to="/" className="block text-xs text-sidebar-foreground/60 hover:text-sidebar-foreground px-3 py-1">← Back to site</Link>
+          <Link to="/" className="block text-xs text-sidebar-foreground/60 hover:text-sidebar-foreground px-3 py-1">← Siteye dön</Link>
         </div>
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-16 px-6 border-b border-border flex items-center justify-between bg-card">
-          <div className="font-serif text-lg">Welcome, {profile?.first_name ?? "Admin"}</div>
-          <Button variant="ghost" size="sm" onClick={signOut}><LogOut size={14} className="mr-1" /> Sign out</Button>
+          <div className="font-serif text-lg">Hoş geldiniz, {profile?.first_name ?? "Yönetici"}</div>
+          <Button variant="ghost" size="sm" onClick={signOut}><LogOut size={14} className="mr-1" /> Çıkış yap</Button>
         </header>
         <main className="flex-1 p-6 overflow-x-auto"><Outlet /></main>
       </div>

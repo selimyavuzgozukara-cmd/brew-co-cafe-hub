@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Package, ShoppingCart, Users, DollarSign } from "lucide-react";
-import { money, dateShort } from "@/lib/format";
+import { money, dateShort, orderStatusLabel } from "@/lib/format";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -49,17 +49,17 @@ function Dashboard() {
   }, []);
 
   const cards = stats ? [
-    { label: "Total Products", value: stats.products, icon: Package },
-    { label: "Pending Orders", value: stats.pendingOrders, icon: ShoppingCart },
-    { label: "Total Users", value: stats.users, icon: Users },
-    { label: "Monthly Revenue", value: money(stats.revenue), icon: DollarSign },
+    { label: "Toplam Ürün", value: stats.products, icon: Package },
+    { label: "Bekleyen Sipariş", value: stats.pendingOrders, icon: ShoppingCart },
+    { label: "Toplam Kullanıcı", value: stats.users, icon: Users },
+    { label: "Aylık Gelir", value: money(stats.revenue), icon: DollarSign },
   ] : null;
 
   const COLORS = ["oklch(0.32 0.045 40)", "oklch(0.72 0.12 55)", "oklch(0.55 0.08 45)", "oklch(0.78 0.08 80)", "oklch(0.45 0.05 60)"];
 
   return (
     <div className="space-y-6">
-      <h1 className="font-serif text-3xl font-semibold">Dashboard</h1>
+      <h1 className="font-serif text-3xl font-semibold">Panel</h1>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {cards ? cards.map((c) => (
           <div key={c.label} className="rounded-xl border border-border bg-card p-5">
@@ -71,7 +71,7 @@ function Dashboard() {
 
       <div className="grid lg:grid-cols-2 gap-4">
         <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-semibold mb-3">Orders, last 7 days</h3>
+          <h3 className="font-semibold mb-3">Son 7 günün siparişleri</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={daily}>
@@ -85,7 +85,7 @@ function Dashboard() {
         </div>
 
         <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-semibold mb-3">Products by category</h3>
+          <h3 className="font-semibold mb-3">Kategoriye göre ürünler</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -101,21 +101,21 @@ function Dashboard() {
       </div>
 
       <div className="rounded-xl border border-border bg-card p-5">
-        <h3 className="font-semibold mb-3">Recent orders</h3>
+        <h3 className="font-semibold mb-3">Son siparişler</h3>
         <table className="w-full text-sm">
           <thead className="text-left text-muted-foreground">
-            <tr><th className="py-2">Order</th><th>Date</th><th>Status</th><th className="text-right">Total</th></tr>
+            <tr><th className="py-2">Sipariş</th><th>Tarih</th><th>Durum</th><th className="text-right">Toplam</th></tr>
           </thead>
           <tbody>
             {recent.map((o) => (
               <tr key={o.id} className="border-t border-border">
                 <td className="py-2 font-mono text-xs">#{o.id.slice(0, 8).toUpperCase()}</td>
                 <td>{dateShort(o.created_at)}</td>
-                <td>{o.status}</td>
+                <td>{orderStatusLabel(o.status)}</td>
                 <td className="text-right tabular-nums">{money(o.total_amount)}</td>
               </tr>
             ))}
-            {recent.length === 0 && <tr><td colSpan={4} className="py-6 text-center text-muted-foreground">No orders yet</td></tr>}
+            {recent.length === 0 && <tr><td colSpan={4} className="py-6 text-center text-muted-foreground">Henüz sipariş yok</td></tr>}
           </tbody>
         </table>
       </div>

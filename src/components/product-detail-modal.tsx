@@ -61,7 +61,7 @@ export function ProductDetailModal({ productId, onClose }: { productId: string |
     });
     setSubmitting(false);
     if (error) { toast.error(error.message); return; }
-    toast.success("Thanks! Your review is pending approval.");
+    toast.success("Teşekkürler! Yorumunuz onay bekliyor.");
     setComment("");
     setRating(5);
     const { data } = await supabase.from("reviews").select("id,user_id,rating,comment,created_at,status").eq("product_id", productId).order("created_at", { ascending: false });
@@ -87,38 +87,38 @@ export function ProductDetailModal({ productId, onClose }: { productId: string |
               <div className="font-serif text-2xl font-semibold">{money(product.price)}</div>
               <div className="text-sm">
                 {product.stock_quantity > 0
-                  ? <span className="text-muted-foreground">{product.stock_quantity} in stock</span>
-                  : <span className="text-destructive font-medium">Out of stock</span>}
+                  ? <span className="text-muted-foreground">Stokta {product.stock_quantity} adet</span>
+                  : <span className="text-destructive font-medium">Tükendi</span>}
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold">Reviews</h3>
+                <h3 className="font-semibold">Yorumlar</h3>
                 <div className="flex items-center gap-2"><StarRating value={avg} /><span className="text-sm text-muted-foreground">({reviews.filter(r=>r.status==='approved').length})</span></div>
               </div>
 
               {user ? (
                 <div className="rounded-lg border border-border p-3 bg-muted/30 mb-4">
-                  <p className="text-sm font-medium mb-2">Leave a review</p>
+                  <p className="text-sm font-medium mb-2">Yorum bırakın</p>
                   <StarRating value={rating} onChange={setRating} />
-                  <Textarea value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Share your thoughts…" className="mt-2" />
+                  <Textarea value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Düşüncelerinizi paylaşın…" className="mt-2" />
                   <Button onClick={submitReview} disabled={submitting} size="sm" className="mt-2 bg-primary hover:bg-primary/90">
-                    {submitting ? "Submitting…" : "Submit review"}
+                    {submitting ? "Gönderiliyor…" : "Yorumu gönder"}
                   </Button>
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground mb-4">Log in to leave a review.</p>
+                <p className="text-sm text-muted-foreground mb-4">Yorum bırakmak için giriş yapın.</p>
               )}
 
               <div className="space-y-3">
                 {reviews.filter(r=>r.status==='approved').length === 0 && (
-                  <p className="text-sm text-muted-foreground">No reviews yet. Be the first.</p>
+                  <p className="text-sm text-muted-foreground">Henüz yorum yok. İlk yorumu siz yapın.</p>
                 )}
                 {reviews.filter(r=>r.status==='approved').map((r) => (
                   <div key={r.id} className="rounded-lg border border-border p-3">
                     <div className="flex items-center justify-between">
-                      <div className="font-medium text-sm">Customer</div>
+                      <div className="font-medium text-sm">Müşteri</div>
                       <span className="text-xs text-muted-foreground">{dateShort(r.created_at)}</span>
                     </div>
                     <StarRating value={r.rating} size={12} className="mt-1" />

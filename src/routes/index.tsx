@@ -6,12 +6,13 @@ import { ProductDetailModal } from "@/components/product-detail-modal";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Coffee, Leaf, Award } from "lucide-react";
+import { money } from "@/lib/format";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Brew & Co. — Small-batch coffee, slow mornings" },
-      { name: "description", content: "Neighborhood roastery serving espresso, pour-over, pastries, and warm hospitality." },
+      { title: "Brew & Co. — Küçük parti kahveler, sakin sabahlar" },
+      { name: "description", content: "Espresso, filtre kahve, hamur işleri ve sıcak bir karşılama sunan mahalle kavurma evi." },
     ],
   }),
   component: Home,
@@ -47,20 +48,20 @@ function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-24 md:py-32 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/80 backdrop-blur text-xs font-medium">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" /> New Spring Roast is here
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Yeni Bahar Kavurması geldi
             </span>
             <h1 className="mt-4 text-5xl md:text-7xl font-serif font-semibold leading-[1.05]">
-              Coffee, made <em className="text-accent not-italic">slowly</em>, served warmly.
+              Kahve, <em className="text-accent not-italic">yavaşça</em> hazırlanır, içtenlikle sunulur.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-md">
-              Small-batch beans, roasted in-house. Pastries from the oven by 7am. A corner table waiting.
+              Küçük partiler hâlinde, mekânımızda kavrulan çekirdekler. Sabah 7'de fırından çıkan hamur işleri. Sizi bekleyen bir köşe masası.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-                <Link to="/products">Explore Menu <ArrowRight size={16} className="ml-1" /></Link>
+                <Link to="/products">Menüyü Keşfet <ArrowRight size={16} className="ml-1" /></Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/services">Our Services</Link>
+                <Link to="/services">Hizmetlerimiz</Link>
               </Button>
             </div>
           </div>
@@ -72,8 +73,8 @@ function Home() {
               ☕
             </div>
             <div className="absolute -bottom-6 -left-6 px-4 py-3 rounded-2xl bg-card border border-border shadow-lg">
-              <div className="text-xs text-muted-foreground">Today's roast</div>
-              <div className="font-serif text-lg font-semibold">Ethiopia Yirgacheffe</div>
+              <div className="text-xs text-muted-foreground">Bugünün kavurması</div>
+              <div className="font-serif text-lg font-semibold">Etiyopya Yirgacheffe</div>
             </div>
           </div>
         </div>
@@ -82,9 +83,9 @@ function Home() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
         <div className="grid sm:grid-cols-3 gap-6">
           {[
-            { icon: Leaf, title: "Single-origin", text: "Sourced directly from small farms each season." },
-            { icon: Coffee, title: "Roasted in-house", text: "Fresh batches roasted weekly above the shop." },
-            { icon: Award, title: "Award-winning baristas", text: "Trained to pull a shot worth the wait." },
+            { icon: Leaf, title: "Tek menşeli", text: "Her mevsim doğrudan küçük çiftliklerden tedarik edilir." },
+            { icon: Coffee, title: "Mekânda kavrulur", text: "Taze partiler her hafta dükkânın üstünde kavrulur." },
+            { icon: Award, title: "Ödüllü baristalar", text: "Beklemeye değer bir espresso çekmek için eğitildiler." },
           ].map(({ icon: Icon, title, text }) => (
             <div key={title} className="p-6 rounded-xl border border-border bg-card">
               <Icon className="text-accent mb-3" />
@@ -98,10 +99,10 @@ function Home() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <h2 className="font-serif text-4xl font-semibold">Featured menu</h2>
-            <p className="text-muted-foreground mt-1">A few favourites from our counter today.</p>
+            <h2 className="font-serif text-4xl font-semibold">Öne çıkan menü</h2>
+            <p className="text-muted-foreground mt-1">Bugün tezgâhımızdan birkaç favori.</p>
           </div>
-          <Button asChild variant="ghost"><Link to="/products">View all <ArrowRight size={14} className="ml-1" /></Link></Button>
+          <Button asChild variant="ghost"><Link to="/products">Tümünü gör <ArrowRight size={14} className="ml-1" /></Link></Button>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products
@@ -113,10 +114,10 @@ function Home() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <h2 className="font-serif text-4xl font-semibold">Beyond the cup</h2>
-            <p className="text-muted-foreground mt-1">Workshops, catering, and more.</p>
+            <h2 className="font-serif text-4xl font-semibold">Fincanın ötesinde</h2>
+            <p className="text-muted-foreground mt-1">Atölyeler, ikram hizmetleri ve daha fazlası.</p>
           </div>
-          <Button asChild variant="ghost"><Link to="/services">All services <ArrowRight size={14} className="ml-1" /></Link></Button>
+          <Button asChild variant="ghost"><Link to="/services">Tüm hizmetler <ArrowRight size={14} className="ml-1" /></Link></Button>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {services
@@ -127,7 +128,7 @@ function Home() {
                   </div>
                   <h3 className="font-serif text-xl font-semibold">{s.name}</h3>
                   <p className="text-sm text-muted-foreground mt-2 line-clamp-3">{s.description}</p>
-                  {s.price && <div className="mt-3 font-serif text-lg">${Number(s.price).toFixed(2)}</div>}
+                  {s.price && <div className="mt-3 font-serif text-lg">{money(Number(s.price))}</div>}
                 </div>
               ))
             : Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-48 rounded-xl" />)}

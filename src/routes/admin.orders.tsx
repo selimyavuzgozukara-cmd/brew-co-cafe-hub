@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { money, dateShort } from "@/lib/format";
+import { money, dateShort, orderStatusLabel } from "@/lib/format";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -26,7 +26,6 @@ function AdminOrders() {
       .from("orders")
       .select("*, order_items(id,quantity,unit_price, products(name))")
       .order("created_at", { ascending: false });
-    // Fetch profiles separately
     const rows = (data as unknown as Order[]) ?? [];
     const ids = [...new Set(rows.map(r => r.user_id))];
     if (ids.length) {
@@ -40,41 +39,41 @@ function AdminOrders() {
 
   const setStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("orders").update({ status }).eq("id", id);
-    if (error) toast.error(error.message); else { toast.success("Status updated"); void load(); }
+    if (error) toast.error(error.message); else { toast.success("Durum güncellendi"); void load(); }
   };
 
   return (
     <div className="space-y-4">
-      <h1 className="font-serif text-3xl font-semibold">Orders</h1>
+      <h1 className="font-serif text-3xl font-semibold">Siparişler</h1>
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left">
-            <tr><th className="p-3">Order</th><th>Customer</th><th>Items</th><th>Date</th><th>Status</th><th className="text-right pr-3">Total</th></tr>
+            <tr><th className="p-3">Sipariş</th><th>Müşteri</th><th>Ürünler</th><th>Tarih</th><th>Durum</th><th className="text-right pr-3">Toplam</th></tr>
           </thead>
           <tbody>
             {list.map(o => (
               <tr key={o.id} className="border-t border-border hover:bg-muted/30 cursor-pointer" onClick={()=>setDetail(o)}>
                 <td className="p-3 font-mono text-xs">#{o.id.slice(0,8).toUpperCase()}</td>
                 <td>{o.profiles?.first_name} {o.profiles?.last_name}</td>
-                <td className="text-muted-foreground">{o.order_items.length} item{o.order_items.length !== 1 ? 's' : ''}</td>
+                <td className="text-muted-foreground">{o.order_items.length} ürün</td>
                 <td>{dateShort(o.created_at)}</td>
                 <td onClick={(e)=>e.stopPropagation()}>
                   <Select value={o.status} onValueChange={(v)=>setStatus(o.id, v)}>
-                    <SelectTrigger className="h-8 w-32"><SelectValue /></SelectTrigger>
-                    <SelectContent>{STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                    <SelectTrigger className="h-8 w-36"><SelectValue /></SelectTrigger>
+                    <SelectContent>{STATUSES.map(s => <SelectItem key={s} value={s}>{orderStatusLabel(s)}</SelectItem>)}</SelectContent>
                   </Select>
                 </td>
                 <td className="text-right pr-3 tabular-nums">{money(o.total_amount)}</td>
               </tr>
             ))}
-            {list.length === 0 && <tr><td colSpan={6} className="p-6 text-center text-muted-foreground">No orders</td></tr>}
+            {list.length === 0 && <tr><td colSpan={6} className="p-6 text-center text-muted-foreground">Sipariş yok</td></tr>}
           </tbody>
         </table>
       </div>
 
       <Dialog open={!!detail} onOpenChange={(v)=>!v && setDetail(null)}>
         <DialogContent>
-          <DialogHeader><DialogTitle>Order #{detail?.id.slice(0,8).toUpperCase()}</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>Sipariş #{detail?.id.slice(0,8).toUpperCase()}</DialogTitle></DialogHeader>
           {detail && (
             <div className="space-y-3">
               <div className="text-sm text-muted-foreground">
@@ -88,8 +87,8 @@ function AdminOrders() {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between font-semibold pt-2"><span>Total</span><span className="tabular-nums">{money(detail.total_amount)}</span></div>
-              <Button variant="outline" onClick={()=>setDetail(null)}>Close</Button>
+              <div className="flex justify-between font-semibold pt-2"><span>Toplam</span><span className="tabular-nums">{money(detail.total_amount)}</span></div>
+              <Button variant="outline" onClick={()=>setDetail(null)}>Kapat</Button>
             </div>
           )}
         </DialogContent>
