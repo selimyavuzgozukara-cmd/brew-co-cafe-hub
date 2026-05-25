@@ -11,8 +11,8 @@ import { Search } from "lucide-react";
 export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
-      { title: "Menu — Brew & Co." },
-      { name: "description", content: "Browse our espresso, brewed coffee, specialty drinks, pastries, and cold drinks." },
+      { title: "Menü — Brew & Co." },
+      { name: "description", content: "Espresso, demlemelerimiz, özel içeceklerimiz, hamur işlerimiz ve soğuk içeceklerimize göz atın." },
     ],
   }),
   component: ProductsPage,
@@ -66,7 +66,6 @@ function ProductsPage() {
         }))
       );
 
-      // Load review aggregates
       if (rows.length) {
         const { data: reviews } = await supabase
           .from("reviews")
@@ -97,8 +96,8 @@ function ProductsPage() {
     <>
       <section className="bg-secondary/40 border-b border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
-          <h1 className="font-serif text-5xl font-semibold">Our menu</h1>
-          <p className="text-muted-foreground mt-2 max-w-xl">Hand-picked beans, brewed with intention. Pastries baked in-house each morning.</p>
+          <h1 className="font-serif text-5xl font-semibold">Menümüz</h1>
+          <p className="text-muted-foreground mt-2 max-w-xl">Özenle seçilmiş çekirdekler, ilhamla demlenmiş kahveler. Her sabah mekânımızda pişen hamur işleri.</p>
         </div>
       </section>
 
@@ -106,21 +105,21 @@ function ProductsPage() {
         <div className="flex flex-col md:flex-row gap-3 mb-8">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
-            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search the menu…" className="pl-9" />
+            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Menüde ara…" className="pl-9" />
           </div>
           <Select value={cat} onValueChange={setCat}>
-            <SelectTrigger className="w-full md:w-48"><SelectValue placeholder="Category" /></SelectTrigger>
+            <SelectTrigger className="w-full md:w-48"><SelectValue placeholder="Kategori" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All categories</SelectItem>
+              <SelectItem value="all">Tüm kategoriler</SelectItem>
               {categories.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
             </SelectContent>
           </Select>
           <Select value={sort} onValueChange={setSort}>
-            <SelectTrigger className="w-full md:w-48"><SelectValue placeholder="Sort" /></SelectTrigger>
+            <SelectTrigger className="w-full md:w-48"><SelectValue placeholder="Sırala" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="name-asc">Name A → Z</SelectItem>
-              <SelectItem value="price-asc">Price: Low → High</SelectItem>
-              <SelectItem value="price-desc">Price: High → Low</SelectItem>
+              <SelectItem value="name-asc">İsim A → Z</SelectItem>
+              <SelectItem value="price-asc">Fiyat: Düşük → Yüksek</SelectItem>
+              <SelectItem value="price-desc">Fiyat: Yüksek → Düşük</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -131,8 +130,8 @@ function ProductsPage() {
           </div>
         ) : enriched.length === 0 ? (
           <div className="text-center py-20 border border-dashed border-border rounded-xl">
-            <p className="font-serif text-2xl">Nothing matched</p>
-            <p className="text-muted-foreground mt-1">Try a different search or category.</p>
+            <p className="font-serif text-2xl">Sonuç bulunamadı</p>
+            <p className="text-muted-foreground mt-1">Farklı bir arama veya kategori deneyin.</p>
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

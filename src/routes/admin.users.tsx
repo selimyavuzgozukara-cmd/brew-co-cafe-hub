@@ -29,18 +29,17 @@ function AdminUsers() {
   useEffect(() => { void load(); }, []);
 
   const setRole = async (userId: string, role: "admin" | "user") => {
-    // Remove other role, add new
     await supabase.from("user_roles").delete().eq("user_id", userId);
     const { error } = await supabase.from("user_roles").insert({ user_id: userId, role });
-    if (error) toast.error(error.message); else { toast.success("Role updated"); void load(); }
+    if (error) toast.error(error.message); else { toast.success("Rol güncellendi"); void load(); }
   };
 
   return (
     <div className="space-y-4">
-      <h1 className="font-serif text-3xl font-semibold">Users</h1>
+      <h1 className="font-serif text-3xl font-semibold">Kullanıcılar</h1>
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-muted/50 text-left"><tr><th className="p-3">Name</th><th>Email</th><th>Joined</th><th>Role</th></tr></thead>
+          <thead className="bg-muted/50 text-left"><tr><th className="p-3">İsim</th><th>E-posta</th><th>Kayıt</th><th>Rol</th></tr></thead>
           <tbody>
             {list.map(u => (
               <tr key={u.id} className="border-t border-border">
@@ -49,8 +48,8 @@ function AdminUsers() {
                 <td>{dateShort(u.created_at)}</td>
                 <td>
                   <Select value={u.role} onValueChange={(v)=>setRole(u.id, v as "admin"|"user")}>
-                    <SelectTrigger className="h-8 w-28"><SelectValue /></SelectTrigger>
-                    <SelectContent><SelectItem value="user">User</SelectItem><SelectItem value="admin">Admin</SelectItem></SelectContent>
+                    <SelectTrigger className="h-8 w-32"><SelectValue /></SelectTrigger>
+                    <SelectContent><SelectItem value="user">Kullanıcı</SelectItem><SelectItem value="admin">Yönetici</SelectItem></SelectContent>
                   </Select>
                 </td>
               </tr>

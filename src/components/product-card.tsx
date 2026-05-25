@@ -31,7 +31,7 @@ export function ProductCard({ product, onOpen }: { product: ProductCardData; onO
         </span>
         {out && (
           <span className="absolute top-2 right-2 px-2 py-1 rounded-full bg-destructive text-destructive-foreground text-xs font-semibold">
-            Out of stock
+            Tükendi
           </span>
         )}
         {product.category_name && (
@@ -55,9 +55,9 @@ export function ProductCard({ product, onOpen }: { product: ProductCardData; onO
         <div className="mt-auto pt-4 flex items-center justify-between">
           <div className="font-serif text-xl font-semibold tabular-nums">{money(product.price)}</div>
           <div className="inline-flex items-center rounded-md border border-border">
-            <button className="px-2 py-1 hover:bg-muted disabled:opacity-50" disabled={out || qty <= 1} onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease"><Minus size={14} /></button>
+            <button className="px-2 py-1 hover:bg-muted disabled:opacity-50" disabled={out || qty <= 1} onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Azalt"><Minus size={14} /></button>
             <span className="px-2 text-sm tabular-nums w-6 text-center">{qty}</span>
-            <button className="px-2 py-1 hover:bg-muted disabled:opacity-50" disabled={out || qty >= product.stock_quantity} onClick={() => setQty((q) => q + 1)} aria-label="Increase"><Plus size={14} /></button>
+            <button className="px-2 py-1 hover:bg-muted disabled:opacity-50" disabled={out || qty >= product.stock_quantity} onClick={() => setQty((q) => q + 1)} aria-label="Arttır"><Plus size={14} /></button>
           </div>
         </div>
 
@@ -65,11 +65,11 @@ export function ProductCard({ product, onOpen }: { product: ProductCardData; onO
           disabled={out}
           onClick={() => {
             add({ id: product.id, name: product.name, price: product.price, stock: product.stock_quantity }, qty);
-            toast.success(`Added ${qty} × ${product.name} to cart`);
+            toast.success(`${qty} × ${product.name} sepete eklendi`);
           }}
           className="mt-3 w-full bg-primary hover:bg-primary/90 disabled:opacity-50"
         >
-          {out ? "Out of stock" : "Add to cart"}
+          {out ? "Tükendi" : "Sepete ekle"}
         </Button>
       </div>
     </div>

@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/products", label: "Menu" },
-  { to: "/services", label: "Services" },
+  { to: "/", label: "Ana Sayfa" },
+  { to: "/products", label: "Menü" },
+  { to: "/services", label: "Hizmetler" },
 ];
 
 export function SiteHeader() {
@@ -48,7 +48,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-1">
-          <Button variant="ghost" size="icon" onClick={() => setOpen(true)} aria-label="Open cart" className="relative">
+          <Button variant="ghost" size="icon" onClick={() => setOpen(true)} aria-label="Sepeti aç" className="relative">
             <ShoppingBag size={20} />
             {count > 0 && (
               <span className="absolute -top-0.5 -right-0.5 grid place-items-center h-5 min-w-5 px-1 rounded-full bg-accent text-accent-foreground text-[10px] font-bold">
@@ -58,27 +58,27 @@ export function SiteHeader() {
           </Button>
 
           {role === "admin" && (
-            <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex" aria-label="Admin">
+            <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex" aria-label="Yönetim">
               <Link to="/admin"><ShieldCheck size={20} /></Link>
             </Button>
           )}
 
           {user ? (
             <>
-              <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex" aria-label="Account">
+              <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex" aria-label="Hesabım">
                 <Link to="/account"><User size={20} /></Link>
               </Button>
-              <Button variant="ghost" size="icon" onClick={() => signOut()} aria-label="Sign out" className="hidden sm:inline-flex">
+              <Button variant="ghost" size="icon" onClick={() => signOut()} aria-label="Çıkış yap" className="hidden sm:inline-flex">
                 <LogOut size={18} />
               </Button>
             </>
           ) : (
             <Button asChild size="sm" className="hidden sm:inline-flex bg-primary hover:bg-primary/90">
-              <Link to="/login">Sign in</Link>
+              <Link to="/login">Giriş Yap</Link>
             </Button>
           )}
 
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobile((v) => !v)} aria-label="Menu">
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobile((v) => !v)} aria-label="Menü">
             {mobile ? <X size={20} /> : <Menu size={20} />}
           </Button>
         </div>
@@ -95,15 +95,15 @@ export function SiteHeader() {
             ))}
             {user ? (
               <>
-                <Link to="/orders" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">My Orders</Link>
-                <Link to="/account" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Account</Link>
+                <Link to="/orders" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Siparişlerim</Link>
+                <Link to="/account" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Hesabım</Link>
                 {role === "admin" && (
-                  <Link to="/admin" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Admin Panel</Link>
+                  <Link to="/admin" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Yönetim Paneli</Link>
                 )}
-                <button onClick={() => { setMobile(false); signOut(); }} className="text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Sign out</button>
+                <button onClick={() => { setMobile(false); signOut(); }} className="text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Çıkış Yap</button>
               </>
             ) : (
-              <Link to="/login" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Sign in</Link>
+              <Link to="/login" onClick={() => setMobile(false)} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-muted">Giriş Yap</Link>
             )}
           </div>
         </div>

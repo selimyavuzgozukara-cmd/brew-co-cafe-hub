@@ -4,13 +4,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { money, dateShort } from "@/lib/format";
+import { money, dateShort, orderStatusLabel } from "@/lib/format";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 
 export const Route = createFileRoute("/orders")({
-  head: () => ({ meta: [{ title: "My Orders — Brew & Co." }] }),
+  head: () => ({ meta: [{ title: "Siparişlerim — Brew & Co." }] }),
   component: () => <Protected><OrdersPage /></Protected>,
 });
 
@@ -50,13 +50,13 @@ export function OrdersPage() {
           <div className="font-medium tabular-nums">#{o.id.slice(0, 8).toUpperCase()}</div>
           <div className="text-xs text-muted-foreground">{dateShort(o.created_at)}</div>
         </div>
-        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyles[o.status] ?? "bg-muted"}`}>{o.status}</span>
+        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyles[o.status] ?? "bg-muted"}`}>{orderStatusLabel(o.status)}</span>
         <div className="font-serif text-lg font-semibold tabular-nums">{money(o.total_amount)}</div>
       </div>
       <div className="mt-3 border-t border-border pt-3 text-sm text-muted-foreground space-y-1">
         {o.order_items.map((it) => (
           <div key={it.id} className="flex justify-between">
-            <span>{it.quantity} × {it.products?.name ?? "Item"}</span>
+            <span>{it.quantity} × {it.products?.name ?? "Ürün"}</span>
             <span className="tabular-nums">{money(it.unit_price * it.quantity)}</span>
           </div>
         ))}
@@ -69,19 +69,19 @@ export function OrdersPage() {
       <div className="mx-auto h-14 w-14 rounded-full bg-muted grid place-items-center mb-4">
         <ShoppingBag className="text-muted-foreground" />
       </div>
-      <p className="font-serif text-xl">No orders yet</p>
-      <p className="text-sm text-muted-foreground mt-1">Treat yourself to something warm.</p>
-      <Button asChild className="mt-4"><Link to="/products">Browse menu</Link></Button>
+      <p className="font-serif text-xl">Henüz sipariş yok</p>
+      <p className="text-sm text-muted-foreground mt-1">Kendinize sıcak bir şeyler ısmarlayın.</p>
+      <Button asChild className="mt-4"><Link to="/products">Menüye göz at</Link></Button>
     </div>
   );
 
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
-      <h1 className="font-serif text-4xl font-semibold mb-6">My orders</h1>
+      <h1 className="font-serif text-4xl font-semibold mb-6">Siparişlerim</h1>
       <Tabs defaultValue="active">
         <TabsList>
-          <TabsTrigger value="active">Active</TabsTrigger>
-          <TabsTrigger value="completed">Completed</TabsTrigger>
+          <TabsTrigger value="active">Aktif</TabsTrigger>
+          <TabsTrigger value="completed">Tamamlanan</TabsTrigger>
         </TabsList>
         <TabsContent value="active" className="space-y-3 mt-4">
           {orders === null ? <Skeleton className="h-24 w-full" /> :

@@ -1,5 +1,12 @@
 export const money = (n: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(Number(n) || 0);
+  new Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(Number(n) || 0);
 
 export const dateShort = (d: string | Date) =>
-  new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  new Date(d).toLocaleDateString("tr-TR", { day: "numeric", month: "short", year: "numeric" });
+
+// Sipariş ve yorum durumları için Türkçe etiketler (DB değerleri İngilizce kalır)
+export const orderStatusLabel = (s: string) =>
+  ({ Pending: "Beklemede", Preparing: "Hazırlanıyor", Delivered: "Teslim Edildi", Cancelled: "İptal Edildi" } as Record<string, string>)[s] ?? s;
+
+export const reviewStatusLabel = (s: string) =>
+  ({ pending: "Beklemede", approved: "Onaylandı", rejected: "Reddedildi" } as Record<string, string>)[s] ?? s;
