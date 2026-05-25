@@ -16,7 +16,6 @@ interface Review {
   comment: string | null;
   created_at: string;
   status: string;
-  profiles?: { first_name: string | null; last_name: string | null } | null;
 }
 
 interface Product {
@@ -44,7 +43,7 @@ export function ProductDetailModal({ productId, onClose }: { productId: string |
     setLoading(true);
     Promise.all([
       supabase.from("products").select("*").eq("id", productId).single(),
-      supabase.from("reviews").select("*, profiles(first_name,last_name)").eq("product_id", productId).order("created_at", { ascending: false }),
+      supabase.from("reviews").select("id,user_id,rating,comment,created_at,status").eq("product_id", productId).order("created_at", { ascending: false }),
     ]).then(([p, r]) => {
       setProduct((p.data as Product) ?? null);
       setReviews((r.data as Review[]) ?? []);
@@ -65,7 +64,7 @@ export function ProductDetailModal({ productId, onClose }: { productId: string |
     toast.success("Thanks! Your review is pending approval.");
     setComment("");
     setRating(5);
-    const { data } = await supabase.from("reviews").select("*, profiles(first_name,last_name)").eq("product_id", productId).order("created_at", { ascending: false });
+    const { data } = await supabase.from("reviews").select("id,user_id,rating,comment,created_at,status").eq("product_id", productId).order("created_at", { ascending: false });
     setReviews((data as Review[]) ?? []);
   };
 
@@ -119,9 +118,7 @@ export function ProductDetailModal({ productId, onClose }: { productId: string |
                 {reviews.filter(r=>r.status==='approved').map((r) => (
                   <div key={r.id} className="rounded-lg border border-border p-3">
                     <div className="flex items-center justify-between">
-                      <div className="font-medium text-sm">
-                        {r.profiles?.first_name ?? "Customer"} {r.profiles?.last_name ?? ""}
-                      </div>
+                      <div className="font-medium text-sm">Customer</div>
                       <span className="text-xs text-muted-foreground">{dateShort(r.created_at)}</span>
                     </div>
                     <StarRating value={r.rating} size={12} className="mt-1" />
